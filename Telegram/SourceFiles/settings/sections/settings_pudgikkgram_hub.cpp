@@ -1,5 +1,7 @@
 
 #include "settings/sections/settings_pudgikkgram_hub.h"
+#include "settings/sections/settings_main.h"
+#include "lang/lang_keys.h"
 
 #include "settings/settings_common_session.h"
 #include "settings/settings_builder.h"
