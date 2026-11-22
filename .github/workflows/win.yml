@@ -63,6 +63,7 @@ jobs:
       UPLOAD_ARTIFACT: "true"
       ONLY_CACHE: "false"
       PREPARE_PATH: "Telegram/build/prepare/prepare.py"
+      SCCACHE_GHA_ENABLED: "true"
 
     defaults:
       run:
@@ -137,6 +138,10 @@ jobs:
           arch: ${{ matrix.arch }}
           sdk: ${{ env.SDK }}
           toolset: ${{ case(matrix.arch == 'arm64', '', '14.44') }}
+
+      - name: Set up sccache.
+        id: sccache
+        uses: mozilla-actions/sccache-action@v0.0.11
 
       - name: NuGet sources.
         run: |
@@ -224,11 +229,17 @@ jobs:
           -D CMAKE_CONFIGURATION_TYPES=Debug ^
           -D CMAKE_COMPILE_WARNING_AS_ERROR=ON ^
           -D CMAKE_MSVC_DEBUG_INFORMATION_FORMAT= ^
+          -D CMAKE_C_COMPILER_LAUNCHER=sccache ^
+          -D CMAKE_CXX_COMPILER_LAUNCHER=sccache ^
           -D DESKTOP_APP_DISABLE_AUTOUPDATE=OFF ^
           -D DESKTOP_APP_DISABLE_CRASH_REPORTS=OFF ^
           %TDESKTOP_BUILD_DEFINE%
 
           cmake --build ..\out --config Debug --parallel
+
+      - name: Show sccache statistics.
+        if: always() && steps.sccache.outcome == 'success'
+        run: sccache --show-stats
 
       - name: Move artifact.
         if: (env.UPLOAD_ARTIFACT == 'true') || (github.ref == 'refs/heads/nightly')
