@@ -16,10 +16,10 @@ if (NOT DEFINED CMAKE_CONFIGURATION_TYPES)
     set(configuration_types_init 1)
 endif()
 
-project(Telegram
+project(Pudgikkgram
     LANGUAGES C CXX
     VERSION ${desktop_app_version_cmake}
-    DESCRIPTION "Official Telegram Desktop messenger"
+    DESCRIPTION "Official Pudgikkgram Desktop messenger"
     HOMEPAGE_URL "https://desktop.telegram.org"
 )
 
