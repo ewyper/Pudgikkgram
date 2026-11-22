@@ -1,6 +1,7 @@
 name: Windows.
 
 on:
+  workflow_dispatch:
   push:
     # Pushes to the canary or private-ci branches run their own workflows.
     branches-ignore:
@@ -55,8 +56,8 @@ jobs:
 
     strategy:
       matrix:
-        arch: [x64_x86, x64, arm64]
-        generator: ["", "Ninja Multi-Config"]
+        arch: [x64]
+        generator: [""]
 
     env:
       UPLOAD_ARTIFACT: "true"
