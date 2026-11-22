@@ -435,6 +435,13 @@ void BuildSectionButtons(SectionBuilder &builder) {
 	}
 
 	builder.addSectionButton({
+    .title = rpl::single(u"Pudgikkgram Hub"_q),
+    .targetSection = PudgikkgramHubId(),
+    .icon = { &st::menuIconManage },
+    .keywords = { u"pudgikkgram"_q, u"hub"_q, u"custom"_q },
+});
+
+	builder.addSectionButton({
 		.title = tr::lng_settings_advanced(),
 		.targetSection = AdvancedId(),
 		.icon = { &st::menuIconManage },
